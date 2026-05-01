@@ -11,7 +11,7 @@ cd "$PROJECT_DIR"
 
 echo "WARNING: This will destroy all infrastructure resources!"
 echo ""
-read -p "Are you sure? Type 'destroy' to confirm: " CONFIRM
+read -r -p "Are you sure? Type 'destroy' to confirm: " CONFIRM
 if [[ "$CONFIRM" != "destroy" ]]; then
     echo "Destruction cancelled."
     exit 0

@@ -191,19 +191,19 @@ locals {
         const metrics = [
           '# HELP node_memory_rss_bytes Process RSS memory in bytes',
           '# TYPE node_memory_rss_bytes gauge',
-          `node_memory_rss_bytes ${memUsage.rss}`,
+          `node_memory_rss_bytes $${memUsage.rss}`,
           '# HELP node_memory_heap_total_bytes Process heap total in bytes',
           '# TYPE node_memory_heap_total_bytes gauge',
-          `node_memory_heap_total_bytes ${memUsage.heapTotal}`,
+          `node_memory_heap_total_bytes $${memUsage.heapTotal}`,
           '# HELP node_memory_heap_used_bytes Process heap used in bytes',
           '# TYPE node_memory_heap_used_bytes gauge',
-          `node_memory_heap_used_bytes ${memUsage.heapUsed}`,
+          `node_memory_heap_used_bytes $${memUsage.heapUsed}`,
           '# HELP node_uptime_seconds Process uptime in seconds',
           '# TYPE node_uptime_seconds gauge',
-          `node_uptime_seconds ${process.uptime()}`,
+          `node_uptime_seconds $${process.uptime()}`,
           '# HELP http_requests_total Total HTTP requests',
           '# TYPE http_requests_total counter',
-          `http_requests_total{method="${req.method}",path="${req.url}"} 1`
+          `http_requests_total{method="$${req.method}",path="$${req.url}"} 1`
         ].join('\n') + '\n';
         res.end(metrics);
         return;
@@ -219,7 +219,7 @@ locals {
     });
 
     server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port $${PORT}`);
     });
     APPJS
 
