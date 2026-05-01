@@ -1,5 +1,11 @@
 const request = require('supertest');
-const { server } = require('../src/app');
+const { server, start } = require('../src/app');
+
+beforeAll((done) => {
+  process.env.PORT = '0';
+  start();
+  server.on('listening', done);
+});
 
 afterAll((done) => {
   server.close(done);
