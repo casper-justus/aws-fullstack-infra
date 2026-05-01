@@ -114,123 +114,123 @@ locals {
   EOF
 
   grafana_dashboard_json = jsonencode({
-    "__inputs" = []
+    "__inputs"   = []
     "__requires" = []
     "annotations" = {
       "list" = []
     }
-    "description" = "AWS Infrastructure Monitoring Dashboard"
-    "editable" = true
-    "gnetId" = null
+    "description"  = "AWS Infrastructure Monitoring Dashboard"
+    "editable"     = true
+    "gnetId"       = null
     "graphTooltip" = 0
-    "id" = null
-    "links" = []
+    "id"           = null
+    "links"        = []
     "panels" = [
       {
-        "id" = 1
-        "title" = "CPU Usage"
-        "type" = "graph"
+        "id"         = 1
+        "title"      = "CPU Usage"
+        "type"       = "graph"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
+            "expr"         = "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
             "legendFormat" = "{{instance}}"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 0, "y" = 0 }
       },
       {
-        "id" = 2
-        "title" = "Memory Usage"
-        "type" = "graph"
+        "id"         = 2
+        "title"      = "Memory Usage"
+        "type"       = "graph"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes"
+            "expr"         = "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes"
             "legendFormat" = "{{instance}}"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 12, "y" = 0 }
       },
       {
-        "id" = 3
-        "title" = "Disk I/O"
-        "type" = "graph"
+        "id"         = 3
+        "title"      = "Disk I/O"
+        "type"       = "graph"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "rate(node_disk_read_bytes_total[5m])"
+            "expr"         = "rate(node_disk_read_bytes_total[5m])"
             "legendFormat" = "{{instance}} - read"
           },
           {
-            "expr" = "rate(node_disk_written_bytes_total[5m])"
+            "expr"         = "rate(node_disk_written_bytes_total[5m])"
             "legendFormat" = "{{instance}} - write"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 0, "y" = 8 }
       },
       {
-        "id" = 4
-        "title" = "Network Traffic"
-        "type" = "graph"
+        "id"         = 4
+        "title"      = "Network Traffic"
+        "type"       = "graph"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "rate(node_network_receive_bytes_total{device!=\"lo\"}[5m])"
+            "expr"         = "rate(node_network_receive_bytes_total{device!=\"lo\"}[5m])"
             "legendFormat" = "{{instance}} - received"
           },
           {
-            "expr" = "rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])"
+            "expr"         = "rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])"
             "legendFormat" = "{{instance}} - transmitted"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 12, "y" = 8 }
       },
       {
-        "id" = 5
-        "title" = "App Memory Usage"
-        "type" = "graph"
+        "id"         = 5
+        "title"      = "App Memory Usage"
+        "type"       = "graph"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "node_memory_rss_bytes"
+            "expr"         = "node_memory_rss_bytes"
             "legendFormat" = "{{instance}} - RSS"
           },
           {
-            "expr" = "node_memory_heap_used_bytes"
+            "expr"         = "node_memory_heap_used_bytes"
             "legendFormat" = "{{instance}} - Heap"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 0, "y" = 16 }
       },
       {
-        "id" = 6
-        "title" = "App Uptime"
-        "type" = "stat"
+        "id"         = 6
+        "title"      = "App Uptime"
+        "type"       = "stat"
         "datasource" = "Prometheus"
         "targets" = [
           {
-            "expr" = "node_uptime_seconds"
+            "expr"         = "node_uptime_seconds"
             "legendFormat" = "{{instance}}"
           }
         ]
         "gridPos" = { "h" = 8, "w" = 12, "x" = 12, "y" = 16 }
       }
     ]
-    "refresh" = "5s"
+    "refresh"       = "5s"
     "schemaVersion" = 30
-    "style" = "dark"
-    "tags" = ["aws", "infrastructure", "auto-generated"]
-    "templating" = { "list" = [] }
+    "style"         = "dark"
+    "tags"          = ["aws", "infrastructure", "auto-generated"]
+    "templating"    = { "list" = [] }
     "time" = {
       "from" = "now-6h"
-      "to" = "now"
+      "to"   = "now"
     }
     "timepicker" = {}
-    "timezone" = "browser"
-    "title" = "AWS Infrastructure Dashboard"
-    "uid" = "aws-infra"
-    "version" = 1
+    "timezone"   = "browser"
+    "title"      = "AWS Infrastructure Dashboard"
+    "uid"        = "aws-infra"
+    "version"    = 1
   })
 
   cloud_init = <<-EOF

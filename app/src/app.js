@@ -29,23 +29,24 @@ const server = http.createServer((req, res) => {
   if (req.url === '/metrics') {
     const memUsage = process.memoryUsage();
     const uptimeSec = process.uptime();
-    const metrics = [
-      '# HELP node_memory_rss_bytes Process RSS memory in bytes',
-      '# TYPE node_memory_rss_bytes gauge',
-      `node_memory_rss_bytes ${memUsage.rss}`,
-      '# HELP node_memory_heap_total_bytes Process heap total in bytes',
-      '# TYPE node_memory_heap_total_bytes gauge',
-      `node_memory_heap_total_bytes ${memUsage.heapTotal}`,
-      '# HELP node_memory_heap_used_bytes Process heap used in bytes',
-      '# TYPE node_memory_heap_used_bytes gauge',
-      `node_memory_heap_used_bytes ${memUsage.heapUsed}`,
-      '# HELP node_uptime_seconds Process uptime in seconds',
-      '# TYPE node_uptime_seconds gauge',
-      `node_uptime_seconds ${uptimeSec.toFixed(0)}`,
-      '# HELP http_requests_total Total HTTP requests',
-      '# TYPE http_requests_total counter',
-      `http_requests_total ${requestCount}`,
-    ].join('\n') + '\n';
+    const metrics =
+      [
+        '# HELP node_memory_rss_bytes Process RSS memory in bytes',
+        '# TYPE node_memory_rss_bytes gauge',
+        `node_memory_rss_bytes ${memUsage.rss}`,
+        '# HELP node_memory_heap_total_bytes Process heap total in bytes',
+        '# TYPE node_memory_heap_total_bytes gauge',
+        `node_memory_heap_total_bytes ${memUsage.heapTotal}`,
+        '# HELP node_memory_heap_used_bytes Process heap used in bytes',
+        '# TYPE node_memory_heap_used_bytes gauge',
+        `node_memory_heap_used_bytes ${memUsage.heapUsed}`,
+        '# HELP node_uptime_seconds Process uptime in seconds',
+        '# TYPE node_uptime_seconds gauge',
+        `node_uptime_seconds ${uptimeSec.toFixed(0)}`,
+        '# HELP http_requests_total Total HTTP requests',
+        '# TYPE http_requests_total counter',
+        `http_requests_total ${requestCount}`,
+      ].join('\n') + '\n';
     res.writeHead(200, { 'Content-Type': 'text/plain; version=0.0.4' });
     res.end(metrics);
     return;

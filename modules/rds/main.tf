@@ -25,8 +25,8 @@ resource "aws_db_instance" "main" {
   storage_type          = "gp3"
   storage_encrypted     = true
 
-  multi_az               = false
-  publicly_accessible    = false
+  multi_az                 = false
+  publicly_accessible      = false
   delete_automated_backups = true
   backup_retention_period  = 7
   backup_window            = "03:00-04:00"

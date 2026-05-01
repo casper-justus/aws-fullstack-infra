@@ -4,34 +4,34 @@ Built a lightweight Node.js HTTP server containerized with Docker — as measure
 
 ## What This Accomplishes
 
-| Goal | Measure | Method |
-|---|---|---|
-| Fast response times | <50ms P95 on `/health`, <200ms P95 on `/` under load | Zero-dependency Node.js server with no framework overhead |
-| Minimal image size | ~180 MB total image size | `node:18-alpine` base, production-only `npm ci` |
-| Secure runtime | Non-root user (`node`) running the process | `USER node` in Dockerfile |
-| Load balancer integration | Health checks passing within 40 seconds of boot | `/health` endpoint with JSON status, ALB checks every 30s |
-| Prometheus compatibility | 5 metrics exported in OpenMetrics format | `/metrics` endpoint with gauges and counters |
-| Graceful shutdown | Zero dropped requests on SIGTERM/SIGINT | `server.close()` before `process.exit(0)` |
+| Goal                      | Measure                                              | Method                                                    |
+| ------------------------- | ---------------------------------------------------- | --------------------------------------------------------- |
+| Fast response times       | <50ms P95 on `/health`, <200ms P95 on `/` under load | Zero-dependency Node.js server with no framework overhead |
+| Minimal image size        | ~180 MB total image size                             | `node:18-alpine` base, production-only `npm ci`           |
+| Secure runtime            | Non-root user (`node`) running the process           | `USER node` in Dockerfile                                 |
+| Load balancer integration | Health checks passing within 40 seconds of boot      | `/health` endpoint with JSON status, ALB checks every 30s |
+| Prometheus compatibility  | 5 metrics exported in OpenMetrics format             | `/metrics` endpoint with gauges and counters              |
+| Graceful shutdown         | Zero dropped requests on SIGTERM/SIGINT              | `server.close()` before `process.exit(0)`                 |
 
 ## Load Test Results
 
 Run `artillery run tests/load.yml --variables "target:http://<alb-dns>"` to reproduce:
 
-| Scenario | Virtual Users | Duration | P50 | P95 | P99 | Error Rate |
-|---|---|---|---|---|---|---|
-| Baseline | 10 | 1 min | 8ms | 15ms | 22ms | 0% |
-| Moderate | 50 | 2 min | 12ms | 35ms | 48ms | 0% |
-| Heavy | 200 | 5 min | 25ms | 120ms | 185ms | 0% |
-| Spike (10→100→10) | variable | 3 min | 15ms | 65ms | 95ms | 0% |
+| Scenario          | Virtual Users | Duration | P50  | P95   | P99   | Error Rate |
+| ----------------- | ------------- | -------- | ---- | ----- | ----- | ---------- |
+| Baseline          | 10            | 1 min    | 8ms  | 15ms  | 22ms  | 0%         |
+| Moderate          | 50            | 2 min    | 12ms | 35ms  | 48ms  | 0%         |
+| Heavy             | 200           | 5 min    | 25ms | 120ms | 185ms | 0%         |
+| Spike (10→100→10) | variable      | 3 min    | 15ms | 65ms  | 95ms  | 0%         |
 
 ## API Endpoints
 
-| Endpoint | Method | Description | Response Time (P95) |
-|---|---|---|---|
-| `/` | GET | Welcome JSON with available endpoints | <200ms |
-| `/health` | GET | ALB health check — status, hostname, uptime, memory | <50ms |
-| `/metrics` | GET | Prometheus-format metrics — 5 metrics exported | <50ms |
-| `/api/status` | GET | Detailed service status — version, env, config state | <200ms |
+| Endpoint      | Method | Description                                          | Response Time (P95) |
+| ------------- | ------ | ---------------------------------------------------- | ------------------- |
+| `/`           | GET    | Welcome JSON with available endpoints                | <200ms              |
+| `/health`     | GET    | ALB health check — status, hostname, uptime, memory  | <50ms               |
+| `/metrics`    | GET    | Prometheus-format metrics — 5 metrics exported       | <50ms               |
+| `/api/status` | GET    | Detailed service status — version, env, config state | <200ms              |
 
 ### Health Check Response
 
@@ -73,12 +73,12 @@ http_requests_total 1523
 
 ## Environment Variables
 
-| Variable | Default | Description |
-|---|---|---|
-| `PORT` | 8000 | HTTP listen port |
-| `NODE_ENV` | development | Environment name |
-| `DATABASE_URL` | null | PostgreSQL connection string (injected by cloud-init) |
-| `AWS_S3_BUCKET` | null | S3 bucket name (injected by cloud-init) |
+| Variable        | Default     | Description                                           |
+| --------------- | ----------- | ----------------------------------------------------- |
+| `PORT`          | 8000        | HTTP listen port                                      |
+| `NODE_ENV`      | development | Environment name                                      |
+| `DATABASE_URL`  | null        | PostgreSQL connection string (injected by cloud-init) |
+| `AWS_S3_BUCKET` | null        | S3 bucket name (injected by cloud-init)               |
 
 ## Dockerfile
 
@@ -96,6 +96,7 @@ CMD ["node", "server.js"]
 ```
 
 Key decisions:
+
 - **Alpine base** — ~180 MB image vs ~350 MB for full Debian node image
 - **`apk add curl`** — required for ALB/Docker health check commands
 - **`npm ci --only=production`** — deterministic install, no dev dependencies
