@@ -1,0 +1,18 @@
+# Global owner — all files
+* @casper-justus
+
+# Terraform root
+*.tf @casper-justus
+terraform.tfvars.example @casper-justus
+
+# Terraform modules
+modules/ @casper-justus
+
+# Application code
+app/ @casper-justus
+
+# Deployment scripts
+scripts/ @casper-justus
+
+# CI/CD & security workflows
+.github/workflows/ @casper-justus
