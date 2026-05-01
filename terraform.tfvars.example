@@ -1,0 +1,31 @@
+# AWS Fullstack Infrastructure - Configuration
+# Copy this file to terraform.tfvars and fill in your values
+
+aws_region = "us-east-1"
+
+project_name = "fullstack-app"
+
+environment = "dev"
+
+vpc_cidr = "10.0.0.0/16"
+
+availability_zones = ["us-east-1a", "us-east-1b"]
+
+app_instance_type = "t3.medium"
+
+monitoring_instance_type = "t3.small"
+
+db_instance_class = "db.t3.micro"
+
+db_name = "appdb"
+
+db_username = "admin"
+
+# REQUIRED: Set a strong password
+db_password = "CHANGE_ME_to_a_strong_password_123!"
+
+# REQUIRED: Your EC2 key pair name (create in AWS EC2 console first)
+ssh_key_name = "your-key-pair-name"
+
+# Optional: Restrict SSH access to specific IPs
+allowed_ssh_cidrs = ["0.0.0.0/0"]

@@ -1,0 +1,63 @@
+config:
+  target: "{{ $target }}"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: "Baseline - 10 VUs"
+    - duration: 120
+      arrivalRate: 50
+      name: "Moderate load - 50 VUs"
+    - duration: 300
+      arrivalRate: 200
+      name: "Heavy load - 200 VUs"
+    - duration: 60
+      arrivalRate: 10
+      rampTo: 100
+      name: "Ramp spike"
+    - duration: 60
+      arrivalRate: 100
+      rampTo: 10
+      name: "Ramp down"
+  defaults:
+    headers:
+      User-Agent: "artillery-load-test/1.0"
+
+scenarios:
+  - name: "Health check"
+    weight: 3
+    flow:
+      - get:
+          url: "/health"
+          expect:
+            - statusCode: 200
+            - contentType: json
+            - hasProperty: status
+            - equals:
+                - "healthy"
+
+  - name: "Main page"
+    weight: 4
+    flow:
+      - get:
+          url: "/"
+          expect:
+            - statusCode: 200
+            - contentType: json
+
+  - name: "Metrics endpoint"
+    weight: 2
+    flow:
+      - get:
+          url: "/metrics"
+          expect:
+            - statusCode: 200
+            - contentType: text/plain
+
+  - name: "Status API"
+    weight: 1
+    flow:
+      - get:
+          url: "/api/status"
+          expect:
+            - statusCode: 200
+            - contentType: json

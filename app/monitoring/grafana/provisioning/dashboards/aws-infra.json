@@ -1,0 +1,151 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "description": "AWS Infrastructure Monitoring Dashboard",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "title": "CPU Usage (%)",
+      "type": "graph",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "lines": true,
+      "linewidth": 2,
+      "fill": 1,
+      "yaxes": [
+        { "format": "percent", "min": 0, "max": 100 },
+        { "show": false }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Memory Usage (Bytes)",
+      "type": "graph",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes",
+          "legendFormat": "{{instance}} - Used",
+          "refId": "A"
+        },
+        {
+          "expr": "node_memory_MemTotal_bytes",
+          "legendFormat": "{{instance}} - Total",
+          "refId": "B"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "lines": true,
+      "linewidth": 2,
+      "fill": 1
+    },
+    {
+      "id": 3,
+      "title": "Disk I/O (bytes/sec)",
+      "type": "graph",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(node_disk_read_bytes_total[5m])",
+          "legendFormat": "{{instance}} - read",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_disk_written_bytes_total[5m])",
+          "legendFormat": "{{instance}} - write",
+          "refId": "B"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "lines": true,
+      "linewidth": 2,
+      "fill": 1
+    },
+    {
+      "id": 4,
+      "title": "Network Traffic (bytes/sec)",
+      "type": "graph",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total{device!=\"lo\"}[5m])",
+          "legendFormat": "{{instance}} - received",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])",
+          "legendFormat": "{{instance}} - transmitted",
+          "refId": "B"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "lines": true,
+      "linewidth": 2,
+      "fill": 1
+    },
+    {
+      "id": 5,
+      "title": "App Memory RSS",
+      "type": "graph",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "node_memory_rss_bytes",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "lines": true,
+      "linewidth": 2,
+      "fill": 1
+    },
+    {
+      "id": 6,
+      "title": "App Uptime",
+      "type": "stat",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "node_uptime_seconds",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "unit": "s",
+      "thresholds": [
+        { "color": "red", "value": null },
+        { "color": "yellow", "value": 60 },
+        { "color": "green", "value": 300 }
+      ]
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": ["aws", "infrastructure", "auto-generated"],
+  "templating": { "list": [] },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "AWS Infrastructure Dashboard",
+  "uid": "aws-infra",
+  "version": 1
+}
