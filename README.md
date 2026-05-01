@@ -1,6 +1,6 @@
 # AWS Fullstack Infrastructure
 
-[![CI Pipeline](https://github.com/kasper/aws-fullstack-infra/actions/workflows/ci.yml/badge.svg)](https://github.com/kasper/aws-fullstack-infra/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/casper-justus/aws-fullstack-infra/actions/workflows/ci.yml/badge.svg)](https://github.com/casper-justus/aws-fullstack-infra/actions/workflows/ci.yml)
 [![Terraform](https://img.shields.io/badge/Terraform-%E2%89%A51.5.0-623CE4?logo=terraform)](https://www.terraform.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
